@@ -1,0 +1,16 @@
+@MyLog.Services.Api_HostAddress = https://localhost:7065
+
+GET {{MyLog.Services.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{MyLog.Services.Api_HostAddress}}/scalar/v1
+Accept: application/json
+
+###
+
+GET {{MyLog.Services.Api_HostAddress}}/movements/5
+Accept: application/json
+
+###
