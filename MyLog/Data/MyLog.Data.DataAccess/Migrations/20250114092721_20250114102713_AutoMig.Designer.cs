@@ -11,8 +11,8 @@ using MyLog.Data.DataAccess;
 namespace MyLog.Data.DataAccess.Migrations
 {
     [DbContext(typeof(MyLogContext))]
-    [Migration("20250113155626_Start")]
-    partial class Start
+    [Migration("20250114092721_20250114102713_AutoMig")]
+    partial class _20250114102713_AutoMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,15 +34,18 @@ namespace MyLog.Data.DataAccess.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PostCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Street")
                         .IsRequired()

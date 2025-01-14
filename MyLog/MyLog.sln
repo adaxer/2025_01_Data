@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLog.Client.Razor", "Client\MyLog.Client.Razor\MyLog.Client.Razor.csproj", "{F984607A-40DB-4033-B8FF-FB812D7B3371}"
 EndProject
@@ -20,6 +20,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLog.Core.Logic", "Core\MyLog.Core.Logic\MyLog.Core.Logic.csproj", "{BE1189E2-2332-4306-B0CE-AEB181FA8665}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLog.Data.DataAccess", "Data\MyLog.Data.DataAccess\MyLog.Data.DataAccess.csproj", "{EF18115C-1167-493D-8461-3DCB3B3FAE3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFB2D178-2B8A-480F-B471-FBF29F580CE1}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		directory.build.props = directory.build.props
+		Automigrate.ps1 = Automigrate.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

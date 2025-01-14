@@ -15,6 +15,9 @@ public class MyLogContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Movement>().Property(m => m.CargoNr).HasMaxLength(15).IsRequired();
+        modelBuilder.Entity<Address>().Property(a => a.Name).HasMaxLength(50);
+        modelBuilder.Entity<Address>().Property(a => a.City).HasMaxLength(30);
+        modelBuilder.Entity<Address>().Property(a => a.PostCode).HasMaxLength(10);
         base.OnModelCreating(modelBuilder);
     }
 }

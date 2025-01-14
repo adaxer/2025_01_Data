@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <EFStartUpProject>Services/MyLog.Services.Api/MyLog.Services.Api.csproj</EFStartUpProject>
+    <EFProject>Data/MyLog.Data.DataAccess/MyLog.Data.DataAccess.csproj</EFProject>
+  </PropertyGroup>
+</Project>
