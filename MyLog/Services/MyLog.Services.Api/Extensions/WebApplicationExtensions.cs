@@ -7,7 +7,7 @@ public static class WebApplicationExtensions
 {
     public static WebApplication MapEndpoints(this WebApplication app)
     {
-        app.MapGet("/movements/{count}", async ([FromRoute] int count, [FromServices] MovementsService movementsService) =>
+        app.MapGet("/movements/{count}", async ([FromRoute] int count, [FromServices] MovementsService movementsService, IHttpContextAccessor accessor) =>
         {
             var movements = await movementsService.GetMovementsAsync(count);
             return movements;

@@ -11,7 +11,7 @@ namespace ADaxer.Auth.User;
 
 public interface IUserService
 {
-  Task<(bool success, string token)> TryLogin(UserLoginData login);
+  Task<(bool success, string accessToken, string refreshToken)> TryLogin(UserLoginData login);
   Task<bool> TryRegister(UserLoginData login, params string[] initialRoles);
 }
 
@@ -26,7 +26,7 @@ public class UserService : IUserService
         _options = options;
     }
 
-  public async Task<(bool, string)> TryLogin(UserLoginData login)
+  public async Task<(bool, string, string)> TryLogin(UserLoginData login)
   {
     try
     {
@@ -36,14 +36,14 @@ public class UserService : IUserService
         var user = await _signInManager.UserManager.FindByNameAsync(login.UserName!);
         var roles = await _signInManager.UserManager.GetRolesAsync(user!);
         var accessToken = JwtHelper.GenerateJwtToken(user!, roles, _options);
-        return (true, accessToken);
+        return (true, accessToken, accessToken);
       }
     }
     catch (Exception ex)
     {
       Trace.TraceError($"Error logging in {login.UserName} / {login.Email}: {ex}");
     }
-    return (false, string.Empty);
+    return (false, string.Empty, string.Empty);
   }
 
   public async Task<bool> TryRegister(UserLoginData data, params string[] initialRoles)

@@ -29,7 +29,7 @@ public static class AccountEndpoints
     {
         if (await userService.TryLogin(data) is { success: true } loginResult)
         {
-            return Results.Ok(new { AccessToken = loginResult.token });
+            return Results.Ok(new { UserName = data.UserName, AccessToken = loginResult.accessToken, RefreshToken=loginResult.refreshToken });
         }
         else
         {

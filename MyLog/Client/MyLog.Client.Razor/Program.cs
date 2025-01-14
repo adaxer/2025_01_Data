@@ -1,3 +1,5 @@
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace MyLog.Client.Razor;
 
 public class Program
@@ -7,7 +9,29 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.Cookie.HttpOnly = true; // Prevent JavaScript access to the cookie
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Use cookies only on HTTPS
+                options.Cookie.Name = "AuthCookie";
+                options.ExpireTimeSpan = TimeSpan.FromDays(7); // Set cookie expiration
+                options.SlidingExpiration = true; // Renew the cookie automatically
+            });
+        builder.Services.AddAuthorization();
         builder.Services.AddRazorPages();
+
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddTransient<AccessTokenHandler>();
+
+        builder.Services.AddHttpClient("Api", client =>
+        {
+            client.BaseAddress = new Uri(builder.Configuration["Api:Url"]??throw new ArgumentNullException("Please add Api-Url to configuration"));
+            
+        }).AddHttpMessageHandler<AccessTokenHandler>();
+        builder.Services.AddSession();
 
         var app = builder.Build();
 
@@ -21,8 +45,9 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseSession();
         app.UseRouting();
-
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapStaticAssets();
