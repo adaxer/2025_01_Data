@@ -1,4 +1,6 @@
-
+﻿
+using ADaxer.Auth;
+using ADaxer.Auth.Endpoints;
 using Microsoft.EntityFrameworkCore;
 using MyLog.Core.Logic;
 using MyLog.Data.DataAccess;
@@ -14,7 +16,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddAuthorization();
+        builder.Services.AddConfiguredUserDb(o=>
+        {
+            o.UserDbConnectionString = builder.Configuration.GetConnectionString("UsersDb")!;
+            o.EncryptionSecret = builder.Configuration.GetValue<string>("Jwt:Secret")!;
+            o.TokenIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer")!;
+            o.TokenAudience = builder.Configuration.GetValue<string>("Jwt:Audience")!;
+            o.TokenLifetime = builder.Configuration.GetValue<TimeSpan>("Jwt:TokenLifetime")!;
+        });
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
@@ -42,6 +51,7 @@ public class Program
 
         app.UseAuthorization();
 
+        app.MapAccountEndpoints();
         app.MapEndpoints();
         // entspricht dem hier: WebApplicationExtensions.MapEndpoints(app);
 

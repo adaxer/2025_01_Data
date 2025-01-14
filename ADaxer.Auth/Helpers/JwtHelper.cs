@@ -30,4 +30,23 @@ public class JwtHelper
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
+    public static void ReadToken(string token)
+    {
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+
+        // Extract claims
+        var claims = jwtToken.Claims;
+        foreach (var claim in claims)
+        {
+            Console.WriteLine($"Type: {claim.Type}, Value: {claim.Value}");
+        }
+
+        // Extract specific claims
+        var userId = claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+        var userName = claims.FirstOrDefault(c => c.Type == "unique_name")?.Value;
+
+        Console.WriteLine($"User ID: {userId}");
+        Console.WriteLine($"User Name: {userName}");
+    }
 }
