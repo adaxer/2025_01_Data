@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyLog.Core.Contracts.Models;
 using MyLog.Data.Models;
 
 namespace MyLog.Data.DataAccess;
@@ -14,10 +15,16 @@ public class MyLogContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+      
         modelBuilder.Entity<Movement>().Property(m => m.CargoNr).HasMaxLength(15).IsRequired();
         modelBuilder.Entity<Address>().Property(a => a.Name).HasMaxLength(50);
         modelBuilder.Entity<Address>().Property(a => a.City).HasMaxLength(30);
         modelBuilder.Entity<Address>().Property(a => a.PostCode).HasMaxLength(10);
-        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<MovementDto>()
+               .HasNoKey()
+               .ToView("MovementDtos")
+               .Property(v => v.Id).HasColumnName("Id");
     }
 }
