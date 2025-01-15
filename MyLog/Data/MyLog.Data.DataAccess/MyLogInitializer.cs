@@ -48,7 +48,7 @@ public class MyLogInitializer
             .CustomInstantiator(f => new Movement($"1337{index++.ToString().PadLeft(3, '0')}"))
             .RuleFor(m=>m.UserName, f=>f.PickRandom(userNames))
             .RuleFor(m => m.CargoPayerId, f => f.PickRandom(addressIds))
-            .RuleFor(m => m.PickupId, f => f.PickRandom(addressIds))
+            .RuleFor(m => m.PickUp, f => f.PickRandom(addresses))
             .RuleFor(m => m.Delivery, f => f.PickRandom(addresses));
 
         var movements = testMovementFaker.Generate(20);

@@ -16,11 +16,15 @@ public class MovementsRepository : IMovementsRepository
 
     public async Task<IEnumerable<MovementDto>> GetMovementsForUserAsync(int count, string userName)
     {
-        var movements = await _context.Movements
-            .Where(m => m.UserName==userName)
+        //var movements = await _context.Movements
+        //    .Where(m => m.UserName==userName)
+        //    .Take(count)
+        //    .Include(m => m.Delivery)
+        //    .ToListAsync();
+        //return movements.Select(m=>m.ToDto());
+
+        return await _context.MovementDtos.Where(m => m.UserName == userName)
             .Take(count)
-            .Include(m => m.Delivery)
             .ToListAsync();
-        return movements.Select(m=>m.ToDto());
     }
 }

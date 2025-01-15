@@ -5,7 +5,7 @@
 namespace MyLog.Data.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddMovementDtosView : Migration
+    public partial class TheView : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace MyLog.Data.DataAccess.Migrations
                    SELECT Movements.Id
                   ,CargoNr
                   ,adrDelivery.Name + char(13) + adrDelivery.PostCode + ' ' + adrDelivery.City AS Delivery
-                  ,PickupId
+                  ,PickUpId
                   ,CargoPayerId
 	              ,UserName
                 FROM Movements

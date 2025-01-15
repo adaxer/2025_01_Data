@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLog.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using MyLog.Data.DataAccess;
 namespace MyLog.Data.DataAccess.Migrations
 {
     [DbContext(typeof(MyLogContext))]
-    partial class MyLogContextModelSnapshot : ModelSnapshot
+    [Migration("20250115135602_TheView")]
+    partial class TheView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

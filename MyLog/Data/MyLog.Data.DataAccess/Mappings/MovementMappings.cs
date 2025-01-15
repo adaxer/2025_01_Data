@@ -12,8 +12,8 @@ public static class MovementMappings
             Id = movement.Id,
             CargoNr = movement.CargoNr,
             Delivery = $"{movement?.Delivery?.Name}{Environment.NewLine}{movement?.Delivery?.PostCode} {movement?.Delivery?.City}",
-            PickUpId = movement!.PickupId,
-            CargoPayerId = movement.CargoPayerId,
+            PickUpId = movement!.PickUp?.Id,
+            CargoPayerId = movement.CargoPayerId??0,
             UserName = movement.UserName
         };
     }

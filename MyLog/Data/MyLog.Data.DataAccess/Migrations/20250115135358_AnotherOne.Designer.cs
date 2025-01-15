@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLog.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using MyLog.Data.DataAccess;
 namespace MyLog.Data.DataAccess.Migrations
 {
     [DbContext(typeof(MyLogContext))]
-    partial class MyLogContextModelSnapshot : ModelSnapshot
+    [Migration("20250115135358_AnotherOne")]
+    partial class AnotherOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,35 +23,6 @@ namespace MyLog.Data.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MyLog.Core.Contracts.Models.MovementDto", b =>
-                {
-                    b.Property<string>("CargoNr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CargoPayerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Delivery")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    b.Property<int?>("PickUpId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("MovementDtos", (string)null);
-                });
 
             modelBuilder.Entity("MyLog.Data.Models.Address", b =>
                 {

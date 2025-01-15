@@ -6,8 +6,8 @@ public class MovementDto
 
     public string CargoNr { get; set; } = string.Empty;
     public string Delivery { get; set; } = string.Empty;
-    public int PickUpId { get; set; }
-    public int CargoPayerId { get; set; }
+    public int? PickUpId { get; set; }
+    public int? CargoPayerId { get; set; }
 
     public string UserName { get; set; } = string.Empty;
 }

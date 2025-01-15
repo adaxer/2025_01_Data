@@ -11,15 +11,15 @@ using MyLog.Data.DataAccess;
 namespace MyLog.Data.DataAccess.Migrations
 {
     [DbContext(typeof(MyLogContext))]
-    [Migration("20250115081520_20250115091500_AutoMig")]
-    partial class _20250115091500_AutoMig
+    [Migration("20250115134303_BeforeView")]
+    partial class BeforeView
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -69,7 +69,7 @@ namespace MyLog.Data.DataAccess.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int?>("CargoPayerId")
+                    b.Property<int>("CargoPayerId")
                         .HasColumnType("int");
 
                     b.Property<int?>("DeliveryId")
@@ -77,6 +77,10 @@ namespace MyLog.Data.DataAccess.Migrations
 
                     b.Property<int?>("PickUpId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -93,7 +97,9 @@ namespace MyLog.Data.DataAccess.Migrations
                 {
                     b.HasOne("MyLog.Data.Models.Address", "CargoPayer")
                         .WithMany()
-                        .HasForeignKey("CargoPayerId");
+                        .HasForeignKey("CargoPayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MyLog.Data.Models.Address", "Delivery")
                         .WithMany()

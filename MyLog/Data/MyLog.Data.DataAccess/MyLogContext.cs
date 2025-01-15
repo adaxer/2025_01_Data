@@ -8,6 +8,7 @@ public class MyLogContext : DbContext
 {
     public DbSet<Movement> Movements { get; set; }
     public DbSet<Address> Addresses { get; set; }
+    public DbSet<MovementDto> MovementDtos { get; set; }
 
     public MyLogContext(DbContextOptions<MyLogContext> options) : base(options)
     {
