@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ADaxer.Auth\ADaxer.Auth.csproj" />
-    <ProjectReference Include="..\..\Data\MyLog.Data.Models\MyLog.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Core\MyLog.Core.Contracts\MyLog.Core.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

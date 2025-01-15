@@ -2,8 +2,10 @@
 using ADaxer.Auth;
 using ADaxer.Auth.Endpoints;
 using Microsoft.EntityFrameworkCore;
+using MyLog.Core.Contracts.Interfaces;
 using MyLog.Core.Logic;
 using MyLog.Data.DataAccess;
+using MyLog.Data.DataAccess.Repositories;
 using MyLog.Services.Api.Extensions;
 using Scalar.AspNetCore;
 
@@ -11,7 +13,7 @@ namespace MyLog.Services.Api;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +36,8 @@ public class Program
         });
 
         // Eigene Services
-        builder.Services.AddScoped<MovementsService>();
+        builder.Services.AddScoped<IMovementsService, MovementsService>();
+        builder.Services.AddScoped<IMovementsRepository, MovementsRepository>();
 
         var app = builder.Build();
 
@@ -55,6 +58,11 @@ public class Program
         app.MapEndpoints();
         // entspricht dem hier: WebApplicationExtensions.MapEndpoints(app);
 
-        app.Run();
+        if (app.Environment.IsDevelopment())
+        {
+            var initializer = new MyLogInitializer(app.Services);
+            await initializer.SeedTestDataAsync();
+        }
+        await app.RunAsync();
     }
 }

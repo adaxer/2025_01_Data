@@ -1,23 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyLog.Data.DataAccess;
-using MyLog.Data.Models;
+﻿using MyLog.Core.Contracts.Interfaces;
+using MyLog.Core.Contracts.Models;
 
 namespace MyLog.Core.Logic;
 
-public class MovementsService
+public class MovementsService : IMovementsService
 {
-    private readonly MyLogContext logContext;
+    private readonly IMovementsRepository _repository;
 
-    public MovementsService(MyLogContext logContext)
+    public MovementsService(IMovementsRepository repository)
     {
-        this.logContext = logContext;
+        _repository = repository;
     }
 
-    public async Task<IEnumerable<Movement>> GetMovementsAsync(int count, string userName)
+    public async Task<IEnumerable<MovementDto>> GetMovementsAsync(int count, string userName)
     {
-        await logContext.Database.EnsureCreatedAsync();
-        var result = await logContext.Movements.Where(m=>m.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).Take(count).ToListAsync();
-
-        return result;
+        var movements = await _repository.GetMovementsForUserAsync(count, userName);
+        return movements.Take(count).ToList();
     }
 }

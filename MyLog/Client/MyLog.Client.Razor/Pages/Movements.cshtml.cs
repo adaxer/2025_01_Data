@@ -1,8 +1,6 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MyLog.Data.Models;
+using MyLog.Core.Contracts.Models;
 
 namespace MyLog.Client.Razor.Pages;
 
@@ -25,6 +23,6 @@ public class MovementsModel : PageModel
 
     public async Task OnGetAsync()
     {
-        var movements = await _client.GetFromJsonAsync<Movement[]>("movements/2");
+        var movements = await _client.GetFromJsonAsync<MovementDto[]>("movements/2");
     }
 }
