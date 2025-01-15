@@ -21,8 +21,11 @@ public class MovementsModel : PageModel
         }
     }
 
+    public List<MovementDto> Movements { get; private set; }
+
     public async Task OnGetAsync()
     {
         var movements = await _client.GetFromJsonAsync<MovementDto[]>("movements/2");
+        Movements = movements!.ToList();
     }
 }

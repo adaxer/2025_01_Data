@@ -9,7 +9,7 @@ public class Movement
     public string CargoNr { get; set; } // "133700010"
     public Address? Delivery { get; set; }
     public Address? PickUp { get; set; }
-  //  public int PickUpId { get; set; }
+
     public Address? CargoPayer { get; set; }
     public int? CargoPayerId { get; set; }
 

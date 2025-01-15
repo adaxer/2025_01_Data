@@ -13,8 +13,21 @@ public static class MovementMappings
             CargoNr = movement.CargoNr,
             Delivery = $"{movement?.Delivery?.Name}{Environment.NewLine}{movement?.Delivery?.PostCode} {movement?.Delivery?.City}",
             PickUpId = movement!.PickUp?.Id,
-            CargoPayerId = movement.CargoPayerId??0,
+            CargoPayerId = movement.CargoPayerId ?? 0,
             UserName = movement.UserName
         };
+    }
+    public static MovementDetailDto ToDetailDto(this Movement movement)
+    {
+        return new MovementDetailDto
+        {
+            Id = movement.Id,
+            CargoNr = movement.CargoNr,
+            DeliveryId = movement.Delivery?.Id,
+            PickUpId = movement!.PickUp?.Id,
+            CargoPayerId = movement.CargoPayerId ?? 0,
+            UserName = movement.UserName
+        };
+
     }
 }

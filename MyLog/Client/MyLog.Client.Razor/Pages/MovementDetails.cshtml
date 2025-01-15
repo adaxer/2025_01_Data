@@ -1,0 +1,30 @@
+﻿@page "/MovementDetails/{id:int}"
+@model MyLog.Client.Razor.Pages.MovementDetailsModel
+@{
+}
+
+<h1>Movement Details</h1>
+
+<form method="post">
+    <div>
+        <label for="CargoNr"><strong>Cargo Number:</strong></label>
+        <input type="text" id="CargoNr" value="@Model.Detail.CargoNr" readonly />
+    </div>
+    <div>
+        <label for="Delivery"><strong>Delivery:</strong></label>
+        <input type="text" id="Delivery" name="Delivery" value="@Model.Detail.DeliveryId" />
+    </div>
+    <div>
+        <label for="PickUp"><strong>PickUp:</strong></label>
+        <input type="text" id="PickUp" name="PickUp" value="@Model.Detail.PickUpId" />
+    </div>
+    <div>
+        <label for="CargoPayer"><strong>Cargo Payer:</strong></label>
+        <input type="text" id="CargoPayer" name="CargoPayer" value="@Model.Detail.CargoPayerId" />
+    </div>
+    <div>
+        <label for="UserName"><strong>User Name:</strong></label>
+        <input type="text" id="UserName" name="UserName" value="@Model.Detail.UserName" />
+    </div>
+    <button type="submit">Save</button>
+</form>

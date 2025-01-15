@@ -1,16 +1,43 @@
-@MyLog.Services.Api_HostAddress = https://localhost:7065
+@url = https://localhost:7065
 
-GET {{MyLog.Services.Api_HostAddress}}/openapi/v1.json
+GET {{url}}/openapi/v1.json
 Accept: application/json
 
 ###
 
-GET {{MyLog.Services.Api_HostAddress}}/scalar/v1
+GET {{url}}/scalar/v1
 Accept: application/json
 
 ###
 
-GET {{MyLog.Services.Api_HostAddress}}/movements/5
+GET {{url}}/movements/5
 Accept: application/json
 
 ###
+
+POST {{url}}/auth/register
+Content-Type: application/json
+{
+    "username": "bob",
+    "password": "123Bobby!",
+    "email": "bob@example.com"
+}
+###
+
+POST {{url}}/auth/login
+Content-Type: application/json
+{
+    "username": "bob",
+    "password": "123Bobby!",
+    "email": "bob@example.com"
+}
+
+###
+
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjBlMTc5MGY5LThjMjYtNDM3Zi1hZGU3LTg4YjA5YTAxNzIxOSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJib2IiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJib2JAZXhhbXBsZS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzM3MjEzMjg4LCJpc3MiOiJLaWVzc2xpbmctU3BlZGl0aW9uLmRlIiwiYXVkIjoiTXlMb2cuS2llc3NsaW5nLVNwZWRpdGlvbi5kZSJ9.g_C9_8FIgiCv93ksqcHpUvHoYaq8nZQXHVv9u6lHubs
+
+GET {{url}}/auth/userinfo
+Authorization: Bearer {{token}}
+
+###
+

@@ -14,6 +14,14 @@ public class MovementsRepository : IMovementsRepository
         _context = context;
     }
 
+    public async Task<MovementDetailDto?> GetMovementByIdAsync(int id)
+    {
+        var dto = await _context.Movements.Include(m=>m.CargoPayer).Include(m=>m.PickUp).Where(m=>m.Id == id).SingleOrDefaultAsync();
+        return (dto==null) 
+            ? null 
+            : dto.ToDetailDto();
+    }
+
     public async Task<IEnumerable<MovementDto>> GetMovementsForUserAsync(int count, string userName)
     {
         //var movements = await _context.Movements
@@ -26,5 +34,10 @@ public class MovementsRepository : IMovementsRepository
         return await _context.MovementDtos.Where(m => m.UserName == userName)
             .Take(count)
             .ToListAsync();
+    }
+
+    public Task<bool> UpdateMovementAsync(MovementDetailDto movementDetailDto)
+    {
+        throw new NotImplementedException();
     }
 }

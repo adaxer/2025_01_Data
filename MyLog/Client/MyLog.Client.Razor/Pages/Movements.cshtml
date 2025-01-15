@@ -2,3 +2,25 @@
 @model MyLog.Client.Razor.Pages.MovementsModel
 @{
 }
+
+<h1>Movements</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Cargo Number</th>
+            <th>Delivery</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movement in Model.Movements)
+        {
+            <tr>
+                <td>
+                    <a href="/MovementDetails/@movement.Id">@movement.CargoNr</a>
+                </td>
+                <td>@Html.Raw(movement.Delivery.Replace("\r", "<br />"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
