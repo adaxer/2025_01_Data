@@ -11,6 +11,8 @@ public class Movement
     public Address? PickUp { get; set; }
     public Address? CargoPayer { get; set; }
 
+    public string UserName { get; set; }
+
     public Movement(string cargoNr)
     {
         CargoNr = cargoNr;

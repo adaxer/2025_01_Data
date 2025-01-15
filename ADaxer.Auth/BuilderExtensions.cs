@@ -50,7 +50,10 @@ public static class BuilderExtensions
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+            options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+            options.AddPolicy("UserOnly", policy => policy.RequireClaim(ClaimTypes.Role, "User"));
+            options.AddPolicy("AdminOrUser", policy => policy.RequireAssertion(context =>
+                   context.User.HasClaim(c => (c.Type == ClaimTypes.Role && (c.Value == "Admin" || c.Value == "User")))));
             options.AddPolicy("BasicAuth", policy =>
             {
                 policy.RequireAuthenticatedUser();

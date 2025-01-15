@@ -9,10 +9,11 @@ public static class WebApplicationExtensions
     {
         app.MapGet("/movements/{count}", async ([FromRoute] int count, [FromServices] MovementsService movementsService, IHttpContextAccessor accessor) =>
         {
-            var movements = await movementsService.GetMovementsAsync(count);
+            var movements = await movementsService.GetMovementsAsync(count, accessor.HttpContext!.User.Identity!.Name);
             return movements;
         })
-        .WithName("GetMovementList");
+        .WithName("GetMovementList")
+        .RequireAuthorization("AdminOrUser");
         return app;
     }
 }
