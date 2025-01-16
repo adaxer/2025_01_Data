@@ -8,4 +8,5 @@ public interface IMovementsService
     Task<MovementDetailDto?> GetMovementByIdAsync(int id);
     Task<bool> UpdateMovementAsync(MovementDetailDto movementDetailDto);
     Task<bool> DeleteMovementByIdAsync(int id);
+    Task<IEnumerable<MovementDto>> GetMovementsByUserAsync(string userName);
 }

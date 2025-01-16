@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyLog.Data.Models;
+﻿namespace MyLog.Data.Models;
 
 public class Movement
 {

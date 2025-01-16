@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLog.Data.DataAccess;
 
@@ -10,9 +11,11 @@ using MyLog.Data.DataAccess;
 namespace MyLog.Data.DataAccess.Migrations
 {
     [DbContext(typeof(MyLogContext))]
-    partial class MyLogContextModelSnapshot : ModelSnapshot
+    [Migration("20250116151047_20250116161027_AutoMig")]
+    partial class _20250116161027_AutoMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,7 +109,7 @@ namespace MyLog.Data.DataAccess.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -115,9 +118,6 @@ namespace MyLog.Data.DataAccess.Migrations
                     b.HasIndex("DeliveryId");
 
                     b.HasIndex("PickUpId");
-
-                    b.HasIndex("UserName")
-                        .HasDatabaseName("IX_Movement_UserName");
 
                     b.ToTable("Movements");
                 });

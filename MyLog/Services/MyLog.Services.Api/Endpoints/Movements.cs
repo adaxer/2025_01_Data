@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyLog.Core.Contracts;
 using MyLog.Core.Contracts.Interfaces;
 using MyLog.Core.Contracts.Models;
 
@@ -39,5 +40,14 @@ public static class Movements
         })
         .WithName("DeleteMovement")
         .RequireAuthorization("AdminOnly");
+
+        routes.MapGet("/movementbyuser/{userName}", async ([FromRoute] string userName, [FromServices] IMovementsService movementsService, [FromServices] IReportService reportService, IHttpContextAccessor accessor) =>
+        {
+            var movements = await movementsService.GetMovementsByUserAsync(userName);
+            await reportService.CreateMovementReportAsync(movements.ToList());
+            return Results.Ok(movements);
+        })
+        .WithName("GetMovementByUser")
+        .RequireAuthorization("AdminOrUser");
     }
 }

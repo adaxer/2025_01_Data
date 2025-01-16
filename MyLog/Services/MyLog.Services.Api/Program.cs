@@ -2,8 +2,10 @@
 using ADaxer.Auth;
 using ADaxer.Auth.Endpoints;
 using Microsoft.EntityFrameworkCore;
+using MyLog.Core.Contracts;
 using MyLog.Core.Contracts.Interfaces;
 using MyLog.Core.Logic;
+using MyLog.Core.Reporting;
 using MyLog.Data.DataAccess;
 using MyLog.Data.DataAccess.Repositories;
 using MyLog.Services.Api.Extensions;
@@ -38,6 +40,7 @@ public class Program
         // Eigene Services
         builder.Services.AddScoped<IMovementsService, MovementsService>();
         builder.Services.AddScoped<IMovementsRepository, MovementsRepository>();
+        builder.Services.AddTransient<IReportService, ReportService>();
 
         var app = builder.Build();
 

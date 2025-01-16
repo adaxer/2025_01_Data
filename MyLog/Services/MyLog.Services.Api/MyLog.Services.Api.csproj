@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\ADaxer.Auth\ADaxer.Auth.csproj" />
     <ProjectReference Include="..\..\Core\MyLog.Core.Logic\MyLog.Core.Logic.csproj" />
+    <ProjectReference Include="..\..\Core\MyLog.Core.Reporting\MyLog.Core.Reporting.csproj" />
     <ProjectReference Include="..\..\Data\MyLog.Data.DataAccess\MyLog.Data.DataAccess.csproj" />
   </ItemGroup>
 

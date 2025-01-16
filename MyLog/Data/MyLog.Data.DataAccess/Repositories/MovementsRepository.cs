@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MyLog.Core.Contracts.Interfaces;
@@ -84,8 +85,18 @@ public class MovementsRepository : IMovementsRepository
         //return (movement != null);
 
         //        var result = await _context.Database.ExecuteSqlInterpolatedAsync($"DELETE FROM Movements WHERE Id={id}");
-        var result = await _context.Database.ExecuteSqlRawAsync("EXEC DeleteMovementById @Id", new SqlParameter("@Id", id));
+        var result = await _context.Database.ExecuteSqlRawAsync("EXEC Stp_getMovementList @Id", new SqlParameter("@Id", id));
 
         return (result > 0);
+    }
+
+    public async Task<IEnumerable<MovementDto>> GetMovementsByUserAsync(string userName)
+    {
+        var userNameParameter = new SqlParameter("@UserName", SqlDbType.NVarChar, 50) { Value = userName };
+        var result = await _context
+            .MovementDtos
+            .FromSqlRaw("EXEC Stp_getMovementList @UserName", userNameParameter)
+            .ToListAsync();
+        return result;
     }
 }

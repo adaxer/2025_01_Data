@@ -22,6 +22,8 @@ public class MovementsService : IMovementsService
         return movements.Take(count).ToList();
     }
 
+    public Task<IEnumerable<MovementDto>> GetMovementsByUserAsync(string userName) => _repository.GetMovementsByUserAsync(userName);
+
     public async Task<bool> UpdateMovementAsync(MovementDetailDto movementDetailDto)
     {
         var success = await _repository.UpdateMovementAsync(movementDetailDto);

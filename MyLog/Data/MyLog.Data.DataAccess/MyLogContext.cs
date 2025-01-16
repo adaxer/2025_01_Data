@@ -19,6 +19,8 @@ public class MyLogContext : DbContext
         base.OnModelCreating(modelBuilder);
       
         modelBuilder.Entity<Movement>().Property(m => m.CargoNr).HasMaxLength(15).IsRequired();
+        modelBuilder.Entity<Movement>().HasIndex(m=>m.UserName).HasDatabaseName("IX_Movement_UserName");
+
         modelBuilder.Entity<Address>().Property(a => a.Name).HasMaxLength(50);
         modelBuilder.Entity<Address>().Property(a => a.City).HasMaxLength(30);
         modelBuilder.Entity<Address>().Property(a => a.PostCode).HasMaxLength(10);

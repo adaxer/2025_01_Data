@@ -56,3 +56,8 @@ Authorization: Bearer {{token}}
 
 ###
 
+
+GET {{url}}/movementbyuser/bob
+Authorization: Bearer {{token}}
+
+###
