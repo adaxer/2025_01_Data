@@ -12,6 +12,8 @@ public class MovementsService : IMovementsService
         _repository = repository;
     }
 
+    public Task<bool> DeleteMovementByIdAsync(int id) => _repository.DeleteMovementByIdAsync(id);
+
     public Task<MovementDetailDto?> GetMovementByIdAsync(int id)=> _repository.GetMovementByIdAsync(id);
 
     public async Task<IEnumerable<MovementDto>> GetMovementsAsync(int count, string userName)

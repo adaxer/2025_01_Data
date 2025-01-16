@@ -6,45 +6,71 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace MyLog.Client.Razor.Pages
+namespace MyLog.Client.Razor.Pages;
+
+[Authorize]
+public class MovementDetailsModel : PageModel
 {
-    [Authorize]
-    public class MovementDetailsModel : PageModel
+    private readonly HttpClient _client;
+
+    public MovementDetailsModel(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly HttpClient _client;
+        _client = httpClientFactory.CreateClient("Api");
+        var accessToken = httpContextAccessor.HttpContext.User.FindFirst("AccessToken")?.Value;
 
-        public MovementDetailsModel(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
+        if (!string.IsNullOrEmpty(accessToken))
         {
-            _client = httpClientFactory.CreateClient("Api");
-            var accessToken = httpContextAccessor.HttpContext.User.FindFirst("AccessToken")?.Value;
-
-            if (!string.IsNullOrEmpty(accessToken))
-            {
-                _client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-            }
+            _client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
         }
+    }
 
-        [BindProperty]
-        public MovementDetailDto Detail { get; set; }
+    [BindProperty]
+    public MovementDetailDto Detail { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+    [BindProperty]
+    public int? DeliveryId { get; set; }
+    [BindProperty]
+    public int? PickUpId { get; set; }
+    [BindProperty]
+    public int? CargoPayerId { get; set; }
+    [BindProperty]
+    public string CargoNr { get; set; } = string.Empty;
+    [BindProperty]
+    public string UserName { get; set; } = string.Empty;
+
+    public async Task<IActionResult> OnGetAsync(int id)
+    {
+        Detail = (await _client.GetFromJsonAsync<MovementDetailDto>($"movement/{id}"))!;
+        DeliveryId = Detail.DeliveryId;
+        PickUpId = Detail.PickUpId;
+        CargoPayerId = Detail.CargoPayerId;
+        UserName = Detail.UserName;
+        CargoNr = Detail.CargoNr;
+
+        if (Detail == null)
         {
-            Detail = await _client.GetFromJsonAsync<MovementDetailDto>($"movement/{id}");
-            if (Detail == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            return NotFound();
         }
-        public async Task<IActionResult> OnPostAsync(int id)
+        return Page();
+    }
+    public async Task<IActionResult> OnPostAsync(int id)
+    {
+        var detail = new MovementDetailDto
         {
-            var response = await _client.PostAsJsonAsync($"movement", Detail);
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToPage("/Movements");
-            }
-            return Page();
+            Id = id,
+            CargoNr = CargoNr,
+            DeliveryId = DeliveryId,
+            PickUpId = PickUpId,
+            CargoPayerId = CargoPayerId,
+            UserName = UserName
+        };
+        var response = await _client.PostAsJsonAsync($"movement", detail);
+        if (response.IsSuccessStatusCode)
+        {
+            return RedirectToPage("/Movements");
         }
+// todo        ErrorMessage=bla
+        return Page();
     }
 }

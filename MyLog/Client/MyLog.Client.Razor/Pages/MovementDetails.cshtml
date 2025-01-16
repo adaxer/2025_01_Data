@@ -8,23 +8,24 @@
 <form method="post">
     <div>
         <label for="CargoNr"><strong>Cargo Number:</strong></label>
-        <input type="text" id="CargoNr" value="@Model.Detail.CargoNr" readonly />
+        <input type="hidden" id="CargoNr" asp-for="CargoNr" />
+        <label>@Model.Detail.CargoNr</label>
     </div>
     <div>
         <label for="Delivery"><strong>Delivery:</strong></label>
-        <input type="text" id="Delivery" name="Delivery" value="@Model.Detail.DeliveryId" />
+        <input type="number" id="Delivery" asp-for="DeliveryId" />
     </div>
     <div>
         <label for="PickUp"><strong>PickUp:</strong></label>
-        <input type="text" id="PickUp" name="PickUp" value="@Model.Detail.PickUpId" />
+        <input type="number" id="PickUp" asp-for="PickUpId" />
     </div>
     <div>
         <label for="CargoPayer"><strong>Cargo Payer:</strong></label>
-        <input type="text" id="CargoPayer" name="CargoPayer" value="@Model.Detail.CargoPayerId" />
+        <input type="number" id="CargoPayer" asp-for="CargoPayerId" />
     </div>
     <div>
         <label for="UserName"><strong>User Name:</strong></label>
-        <input type="text" id="UserName" name="UserName" value="@Model.Detail.UserName" />
+        <input type="text" id="UserName" asp-for="UserName" />
     </div>
     <button type="submit">Save</button>
 </form>

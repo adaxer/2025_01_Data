@@ -9,6 +9,10 @@
     <thead>
         <tr>
             <th>Cargo Number</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th></th>
+            }
             <th>Delivery</th>
         </tr>
     </thead>
@@ -19,8 +23,43 @@
                 <td>
                     <a href="/MovementDetails/@movement.Id">@movement.CargoNr</a>
                 </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td><button class="btn btn-danger" onclick="confirmDelete(@movement.Id)">Delete</button></td>
+                }
+
                 <td>@Html.Raw(movement.Delivery.Replace("\r", "<br />"))</td>
             </tr>
         }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Are you sure you want to delete this item?")) {
+                fetch(`/Movements/Delete/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert("Failed to delete the item.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Failed to delete the item.");
+                });
+            }
+        }
+    </script>
+}
+
+<form method="post">
+    @Html.AntiForgeryToken()
+</form>

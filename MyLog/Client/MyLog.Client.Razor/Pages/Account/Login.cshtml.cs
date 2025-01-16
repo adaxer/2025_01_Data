@@ -19,6 +19,7 @@
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 using ADaxer.Auth.User;
+using Azure.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,7 @@ public class LoginModel : PageModel
         }
 
         // Call the API to authenticate the user
-        var tokenResponse = await AuthenticateWithApiAsync(Username, Password);
+        (TokenResponse tokenResponse, UserInfo info) = await AuthenticateWithApiAsync(Username, Password);
 
         if (tokenResponse == null)
         {
@@ -65,7 +66,8 @@ public class LoginModel : PageModel
             new Claim(ClaimTypes.Name, tokenResponse.UserName),
             new Claim("AccessToken", tokenResponse.AccessToken),
             new Claim("RefreshToken", tokenResponse.RefreshToken)
-        };
+        }.Concat(info!.Roles.Select(r=>new Claim(ClaimTypes.Role, r))).ToList();
+        claims.Add(new Claim(ClaimTypes.Email, info!.Email!));
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -82,7 +84,7 @@ public class LoginModel : PageModel
         return RedirectToPage(ReturnUrl);
     }
 
-    private async Task<TokenResponse> AuthenticateWithApiAsync(string username, string password)
+    private async Task<(TokenResponse?, UserInfo?)> AuthenticateWithApiAsync(string username, string password)
     {
         using var httpClient = new HttpClient();
         httpClient.BaseAddress = new Uri("https://localhost:7065"); // Base URL of your API
@@ -94,12 +96,16 @@ public class LoginModel : PageModel
         if (response.IsSuccessStatusCode)
         {
             var jsonResponse = await response.Content.ReadAsStringAsync();
-            var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(jsonResponse);
+            var tokenResponse = System.Text.Json.JsonSerializer.Deserialize<TokenResponse>(jsonResponse)!;
+            httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenResponse.AccessToken);
 
-            return tokenResponse;
+            var userInfo = await httpClient.GetFromJsonAsync<UserInfo>("auth/userInfo");
+
+            return (tokenResponse, userInfo);
         }
 
-        return null;
+        return (null, null);
     }
 
     public class TokenResponse

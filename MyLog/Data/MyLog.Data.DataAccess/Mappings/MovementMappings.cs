@@ -25,7 +25,7 @@ public static class MovementMappings
             CargoNr = movement.CargoNr,
             DeliveryId = movement.Delivery?.Id,
             PickUpId = movement!.PickUp?.Id,
-            CargoPayerId = movement.CargoPayerId ?? 0,
+            CargoPayerId = movement.CargoPayerId,
             UserName = movement.UserName
         };
 
