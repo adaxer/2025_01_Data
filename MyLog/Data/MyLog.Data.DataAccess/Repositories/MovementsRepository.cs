@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using MyLog.Core.Contracts.Interfaces;
 using MyLog.Core.Contracts.Models;
 using MyLog.Data.DataAccess.Mappings;
-using MyLog.Data.Models;
 
 namespace MyLog.Data.DataAccess.Repositories;
 
@@ -85,7 +84,7 @@ public class MovementsRepository : IMovementsRepository
         //return (movement != null);
 
         //        var result = await _context.Database.ExecuteSqlInterpolatedAsync($"DELETE FROM Movements WHERE Id={id}");
-        var result = await _context.Database.ExecuteSqlRawAsync("EXEC Stp_getMovementList @Id", new SqlParameter("@Id", id));
+        var result = await _context.Database.ExecuteSqlRawAsync("EXEC DeleteMovementById @Id", new SqlParameter("@Id", id));
 
         return (result > 0);
     }

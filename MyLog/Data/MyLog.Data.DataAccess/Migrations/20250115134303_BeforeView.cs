@@ -2,58 +2,57 @@
 
 #nullable disable
 
-namespace MyLog.Data.DataAccess.Migrations
+namespace MyLog.Data.DataAccess.Migrations;
+
+/// <inheritdoc />
+public partial class BeforeView : Migration
 {
     /// <inheritdoc />
-    public partial class BeforeView : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Movements_Addresses_CargoPayerId",
-                table: "Movements");
+        migrationBuilder.DropForeignKey(
+            name: "FK_Movements_Addresses_CargoPayerId",
+            table: "Movements");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "CargoPayerId",
-                table: "Movements",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
+        migrationBuilder.AlterColumn<int>(
+            name: "CargoPayerId",
+            table: "Movements",
+            type: "int",
+            nullable: false,
+            defaultValue: 0,
+            oldClrType: typeof(int),
+            oldType: "int",
+            oldNullable: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Movements_Addresses_CargoPayerId",
-                table: "Movements",
-                column: "CargoPayerId",
-                principalTable: "Addresses",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_Movements_Addresses_CargoPayerId",
+            table: "Movements",
+            column: "CargoPayerId",
+            principalTable: "Addresses",
+            principalColumn: "Id",
+            onDelete: ReferentialAction.Cascade);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Movements_Addresses_CargoPayerId",
-                table: "Movements");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropForeignKey(
+            name: "FK_Movements_Addresses_CargoPayerId",
+            table: "Movements");
 
-            migrationBuilder.AlterColumn<int>(
-                name: "CargoPayerId",
-                table: "Movements",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
+        migrationBuilder.AlterColumn<int>(
+            name: "CargoPayerId",
+            table: "Movements",
+            type: "int",
+            nullable: true,
+            oldClrType: typeof(int),
+            oldType: "int");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Movements_Addresses_CargoPayerId",
-                table: "Movements",
-                column: "CargoPayerId",
-                principalTable: "Addresses",
-                principalColumn: "Id");
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_Movements_Addresses_CargoPayerId",
+            table: "Movements",
+            column: "CargoPayerId",
+            principalTable: "Addresses",
+            principalColumn: "Id");
     }
 }

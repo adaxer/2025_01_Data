@@ -24,13 +24,8 @@ public class Program
         builder.Services.AddRazorPages();
 
         builder.Services.AddHttpContextAccessor();
-        builder.Services.AddTransient<AccessTokenHandler>();
 
-        builder.Services.AddHttpClient("Api", client =>
-        {
-            client.BaseAddress = new Uri(builder.Configuration["Api:Url"]??throw new ArgumentNullException("Please add Api-Url to configuration"));
-            
-        }).AddHttpMessageHandler<AccessTokenHandler>();
+        builder.AddAuthenticatingHttpClient();
         builder.Services.AddSession();
 
         var app = builder.Build();

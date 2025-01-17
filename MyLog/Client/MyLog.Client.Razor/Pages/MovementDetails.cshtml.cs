@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyLog.Core.Contracts.Models;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 namespace MyLog.Client.Razor.Pages;
 
@@ -16,17 +13,10 @@ public class MovementDetailsModel : PageModel
     public MovementDetailsModel(IHttpClientFactory httpClientFactory, IHttpContextAccessor httpContextAccessor)
     {
         _client = httpClientFactory.CreateClient("Api");
-        var accessToken = httpContextAccessor.HttpContext.User.FindFirst("AccessToken")?.Value;
-
-        if (!string.IsNullOrEmpty(accessToken))
-        {
-            _client.DefaultRequestHeaders.Authorization =
-                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
-        }
     }
 
     [BindProperty]
-    public MovementDetailDto Detail { get; set; }
+    public MovementDetailDto Detail { get; set; } = default!;
 
     [BindProperty]
     public int? DeliveryId { get; set; }

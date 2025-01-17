@@ -2,14 +2,14 @@
 
 #nullable disable
 
-namespace MyLog.Data.DataAccess.Migrations
+namespace MyLog.Data.DataAccess.Migrations;
+
+/// <inheritdoc />
+public partial class TheView : Migration
 {
-    /// <inheritdoc />
-    public partial class TheView : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"
+        migrationBuilder.Sql(@"
                CREATE VIEW MovementDtos AS
                    SELECT Movements.Id
                   ,CargoNr
@@ -19,11 +19,10 @@ namespace MyLog.Data.DataAccess.Migrations
 	              ,UserName
                 FROM Movements
                 LEFT OUTER JOIN Addresses adrDelivery ON adrDelivery.ID = DeliveryId");
-        }
+    }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP VIEW MovementDtos;");
-        }
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP VIEW MovementDtos;");
     }
 }

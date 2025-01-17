@@ -42,6 +42,19 @@ public class Program
         builder.Services.AddScoped<IMovementsRepository, MovementsRepository>();
         builder.Services.AddTransient<IReportService, ReportService>();
 
+        // Add CORS policy
+        var clientUrl = builder.Configuration.GetValue<string>("Client:Razor:Url")!;
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowClient", policy =>
+            {
+                policy.WithOrigins(clientUrl)
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
+            });
+        });
+
         var app = builder.Build();
 
         /* ------------------------------------------------- */
@@ -54,7 +67,7 @@ public class Program
         }
 
         app.UseHttpsRedirection();
-
+        app.UseCors("AllowClient");
         app.UseAuthorization();
 
         app.MapAccountEndpoints();

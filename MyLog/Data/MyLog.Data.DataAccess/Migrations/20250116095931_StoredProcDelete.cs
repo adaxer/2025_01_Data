@@ -2,27 +2,26 @@
 
 #nullable disable
 
-namespace MyLog.Data.DataAccess.Migrations
+namespace MyLog.Data.DataAccess.Migrations;
+
+/// <inheritdoc />
+public partial class StoredProcDelete : Migration
 {
     /// <inheritdoc />
-    public partial class StoredProcDelete : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql(@"
+        migrationBuilder.Sql(@"
                 CREATE PROCEDURE DeleteMovementById
                     @Id INT
                 AS
                 BEGIN
                     DELETE FROM Movements WHERE Id = @Id
                 END");
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.Sql("DROP PROCEDURE DeleteMovementById;");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.Sql("DROP PROCEDURE DeleteMovementById;");
     }
 }

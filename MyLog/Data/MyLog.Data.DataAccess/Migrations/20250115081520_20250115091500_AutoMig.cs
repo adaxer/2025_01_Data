@@ -2,21 +2,20 @@
 
 #nullable disable
 
-namespace MyLog.Data.DataAccess.Migrations
+namespace MyLog.Data.DataAccess.Migrations;
+
+/// <inheritdoc />
+public partial class _20250115091500_AutoMig : Migration
 {
     /// <inheritdoc />
-    public partial class _20250115091500_AutoMig : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
 
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
 
-        }
     }
 }
